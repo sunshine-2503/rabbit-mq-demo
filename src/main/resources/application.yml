@@ -1,0 +1,21 @@
+# 本地 RabbitMQ 配置
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    publisher-confirms: true
+
+    # 死信队列配置
+    listener:
+      simple:
+        retry:
+          enabled: true
+          # 同一条消息最大消费次数（超过该次数 && requeue-rejected为false，则成为【死信】）
+          max-attempts: 5
+          # 单条消息消费时间（毫秒）【单条消息超时也将变成死信】
+          initial-interval: 2000ms
+        # 设置为false才能将消息放入【死信队列】
+        default-requeue-rejected: false
